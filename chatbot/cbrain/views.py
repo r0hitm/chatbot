@@ -26,31 +26,32 @@ def chat_view(request):
         # Get user input
         user_message = request.POST.get('user_message')
 
-        # Get chat object or create new one
-        chat_id = request.session.get('chat_id')
-        if chat_id:
-            chat = Chat.objects.filter(chat_id=chat_id).first()
-        else:
-            chat = Chat.objects.create()
-            request.session['chat_id'] = chat.chat_id
+        # # Get chat object or create new one
+        # chat_id = request.session.get('chat_id')
+        # if chat_id:
+        #     chat = Chat.objects.filter(chat_id=chat_id).first()
+        # else:
+        #     chat = Chat.objects.create(user=request.user)
+        #     request.session['chat_id'] = chat.session_id
 
-        # Save user message in the chat history
-        chat_history = ChatHistory.objects.create(
-            chat_session=chat, message=user_message, is_bot=False)
+        # # Save user message in the chat history
+        # chat_history = ChatHistory.objects.create(
+        #     chat_session=chat, message=user_message, is_bot=False)
 
         # Get chatbot response
         chatbot = Chatbot()
         chatbot_response = chatbot.respond(user_message)
 
-        # Save chatbot response in the chat history
-        chat_history = ChatHistory.objects.create(
-            chat_session=chat, message=chatbot_response, is_bot=True)
+        # # Save chatbot response in the chat history
+        # chat_history = ChatHistory.objects.create(
+        #     chat_session=chat, message=chatbot_response, is_bot=True)
 
         # Get chat history for this chat
-        chat_history = Message.objects.filter(chat=chat).order_by('-timestamp')
+        # chat_history = ChatHistory.objects.filter(chat=chat).order_by('-timestamp')
 
         # Render chat template with chat history and new message
-        return render(request, 'chat.html', {'chat_history': chat_history, 'new_message': chatbot_response})
+        # return render(request, 'chat.html', {'chat_history': chat_history, 'new_message': chatbot_response})
+        return render(request, 'chat.html', {'new_message': chatbot_response, 'user_message': user_message})
     else:
         # Render empty chat template for initial page load
         return render(request, 'chat.html', {})

@@ -34,4 +34,4 @@ class Chatbot(models.Model):
     # questions = models.ManyToManyField('Question')
 
     def respond(self, message):
-        return 'I am a chatbot. I do not respond to messages yet.'
+        return 'I am a chatbot, and I do not respond to messages yet.'

@@ -17,6 +17,13 @@
         <p>{{ now }}</p>
     </div>
     {% endif %}
+    <!-- For testing -->
+    {% if user_message %}
+    <div class="user-message">
+        <p>{{ user_message }}</p>
+        <p>{{ now }}</p>
+    </div>
+    {% endif %}
 </div>
 
 <form method="post" action="{% url 'chat' %}">
