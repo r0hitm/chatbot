@@ -1,14 +1,17 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
 
 <head>
-    <title>{% block title %}Django Chatbot{% endblock %}</title>
-    {% load static %}
+    <title>{% block title %}Chatbot{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <!-- <link rel="shortcut icon" href="{% static 'favicon.png' %}" type="image/x-icon"> -->
+    <!-- <script src="{% static ''%}" defer></script> -->
 </head>
 
 <body>
-    <header>
+    <!-- <header>
         <nav>
             <ul>
                 <li><a href="{% url 'chat' %}">Chat</a></li>
@@ -20,7 +23,7 @@
                 {% endif %}
             </ul>
         </nav>
-    </header>
+    </header> -->
     <main>
         {% block content %}
         {% endblock %}

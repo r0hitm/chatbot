@@ -7,15 +7,15 @@
 {% endif %}
 <form method="post">
     {% csrf_token %}
-    <div>
+    <div class="form-field">
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required>
     </div>
-    <div>
+    <div class="form-field">
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required>
     </div>
-    <div>
+    <div class="form-control">
         <button type="submit">Login</button>
     </div>
 </form>
