@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Chatbot</h1>
+
+<div id="chat-container">
+    {% for message in chat_history %}
+    <div class="{% if message.sender == 'user' %}user-message{% else %}chatbot-message{% endif %}">
+        <p>{{ message.text }}</p>
+        <p>{{ message.timestamp }}</p>
+    </div>
+    {% endfor %}
+
+    {% if new_message %}
+    <div class="chatbot-message">
+        <p>{{ new_message }}</p>
+        <p>{{ now }}</p>
+    </div>
+    {% endif %}
+</div>
+
+<form method="post" action="{% url 'chat' %}">
+    {% csrf_token %}
+    <input type="text" name="user_message" autofocus>
+    <input type="submit" value="Send">
+</form>
+{% endblock %}
