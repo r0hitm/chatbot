@@ -6,7 +6,7 @@ from cbrain.models import Chat, Message
 
 
 def home(request):
-    return render(request, 'base.html')
+    return render(request, 'index.html')
 
 
 def chat(request):
