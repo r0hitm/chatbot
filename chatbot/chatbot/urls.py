@@ -17,12 +17,11 @@ from django.contrib import admin
 from django.urls import path
 from cbrain import views
 
-app_name = 'cbrain'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
-    path('signup/', views.signup, name='signup'),
-    path('chat/', views.chat, name='chat'),
+    path('signup/', views.signup_view, name='signup'),
+    path('chat/', views.chat_view, name='chat'),
 ]

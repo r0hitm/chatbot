@@ -24,4 +24,6 @@
     <input type="text" name="user_message" autofocus>
     <input type="submit" value="Send">
 </form>
+<p>Logged in as {{ user }}</p>
+<p><a href="{% url 'logout' %}">Log out</a></p>
 {% endblock %}

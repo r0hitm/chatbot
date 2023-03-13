@@ -2,14 +2,25 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib import messages
-from cbrain.models import Chat, Message
+from .models import Chat, Message
+from .forms import UserCreationForm
+
+def index(request):
+    # if user is logged in, redirect to chat page
+    if request.user.is_authenticated:
+        return redirect('chat')
+    # otherwise, redirect to login page
+    return redirect('login')
+
+    # # For testing purposes, redirect to chat page
+    # return redirect('chat')
 
 
-def home(request):
-    return render(request, 'index.html')
-
-
-def chat(request):
+def chat_view(request):
+    # TODO: I don't know if this works
+    if not request.user.is_authenticated:
+        return redirect('login')
+        
     if request.method == 'POST':
         # Get user input
         user_message = request.POST.get('user_message')
@@ -46,11 +57,11 @@ def chat(request):
 
 def login_view(request):
     if request.method == 'POST':
-        form = AuthenticationForm(request=request, data=request.POST)
+        form = AuthenticationForm(data=request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
+            user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
                 return redirect('chat')
@@ -59,8 +70,7 @@ def login_view(request):
         else:
             messages.error(request, 'Invalid username or password')
     else:
-        form = AuthenticationForm()
-    return render(request, 'login.html', {'form': form})
+        return render(request, 'login.html')
 
 
 def logout_view(request):
@@ -68,16 +78,14 @@ def logout_view(request):
     return redirect('login')
 
 
-def signup(request):
+def signup_view(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=password)
+            user = form.save()
             login(request, user)
             return redirect('chat')
+        else: 
+            return redirect('signup')
     else:
-        form = UserCreationForm()
-    return render(request, 'signup.html', {'form': form})
+        return render(request, 'signup.html')
