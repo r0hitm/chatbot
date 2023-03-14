@@ -1,40 +1,38 @@
 {% extends 'index.html' %}
 
+{% block head %}
+{{ block.super }}
+{% endblock %}
+
 {% block content %}
 <h1>Chatbot</h1>
 
+
 <div id="chat-container">
     {% for message in chat_history %}
-    <div class="{% if message.isBot %}chatbot-message{% else %}user-message{% endif %}">
-        <p>{{ message.message }}</p>
-        <p>{{ message.timestamp }}</p>
+    <div class="{% if message.is_bot %}chatbot-message{% else %}user-message{% endif %}">
+        <span class="message-user">{% if message.is_bot %}Chatbot{% else %}{{user}}{% endif %}</span>
+        <p class="message">{{ message.message }}</p>
+        <p class="timestamp">{{ message.timestamp }}</p>
     </div>
     {% endfor %}
-
-    <!-- {% if new_message %}
-    <div class="chatbot-message">
-        <p>{{ new_message }}</p>
-        <p>{{ now }}</p>
-    </div>
-    {% endif %} -->
-    <!-- For testing -->
-    <!-- {% if user_message %}
-    <div class="user-message">
-        <p>{{ user_message }}</p>
-        <p>{{ now }}</p>
-    </div>
-    {% endif %} -->
 </div>
 
-<form method="post" action="{% url 'chat' %}">
+<form method="post" action="{% url 'chat' %}" id="chat-form">
     {% csrf_token %}
     <input type="text" name="user_message" autofocus>
-    <input type="submit" value="Send">
+    <button type="submit">
+        <svg xmlns="http://www.w3.org/2000/svg" class="send-svg" viewBox="0 0 24 24">
+            <path
+                d="M24 0l-6 22-8.129-7.239 7.802-8.234-10.458 7.227-7.215-1.754 24-12zm-15 16.668v7.332l3.258-4.431-3.258-2.901z" />
+        </svg>
+    </button>
 </form>
 <p>Logged in as {{ user }}</p>
 <p><a href="{% url 'logout' %}">Log out</a></p>
 
-<!-- <script>
-    // todo: send message
-</script> -->
+<script>
+    const chatContainer = document.querySelector("#chat-container");
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+</script>
 {% endblock %}

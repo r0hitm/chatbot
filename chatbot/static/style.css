@@ -8,7 +8,7 @@
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     background-color: var(--secondary-color);
     color: var(--text-color);
     width: 100vw;
@@ -37,7 +37,7 @@ form {
     align-items: center;
 }
 
-form > * {
+form:not(#chat-form) > * {
     width: 80%;
     max-width: 480px;
     margin: 0.5rem 0;
@@ -87,4 +87,75 @@ button {
 
 button:hover {
     background-color: #1565c0;
+}
+
+/* chat page styles */
+div#chat-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 480px;
+    height: 360px;
+    overflow-y: scroll;
+}
+
+div#chat-container > .chatbot-message {
+    align-self: flex-start;
+}
+
+div#chat-container > .user-message {
+    align-self: flex-end;
+}
+
+.chatbot-message {
+    padding: 0.5rem;
+    border-radius: 5px;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+}
+
+.user-message {
+    padding: 0.5rem;
+    border-radius: 5px;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+}
+
+.message-user {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: #aaa;
+}
+
+.message {
+    font-size: 1rem;
+}
+
+.timestamp {
+    font-size: 0.6rem;
+    font-weight: 400;
+    color: #aaa;
+}
+
+form#chat-form {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    padding: 0.5rem;
+}
+
+form#chat-form input {
+    border-radius: 5px 0 0 5px;
+}
+
+form#chat-form button {
+    border-radius: 0 5px 5px 0;
+}
+
+.send-svg {
+    width: 1rem;
+    height: 1rem;
+    fill: var(--secondary-color);
 }
