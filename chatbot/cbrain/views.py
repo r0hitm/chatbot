@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import Http404
 from django.views import View
-from django.db import transaction
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
@@ -23,14 +23,20 @@ def index(request):
 
 class chat_view(LoginRequiredMixin, View):
     def get(self, request):
-        # if the user is not logged in, otherwise 404 in this route
-        chat = get_object_or_404(Chat, user=request.user)
+        try:
+            chat = Chat.objects.get(user=request.user)
+        except Chat.DoesNotExist:
+            chat = Chat.objects.create(user=request.user)
+
         chat_history = chat.get_history()
         return render(request, 'chat.html', {'chat_history': chat_history})
 
     def post(self, request):
         user_message = request.POST.get('user_message')
-        chat = get_object_or_404(Chat, user=request.user)
+        try:
+            chat = Chat.objects.get(user=request.user)
+        except Chat.DoesNotExist:
+            chat = Chat.objects.create(user=request.user)
 
         # with transaction.atomic():
         ChatHistory.objects.create(
@@ -45,6 +51,9 @@ class chat_view(LoginRequiredMixin, View):
 
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('chat')
+
     if request.method == 'POST':
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
