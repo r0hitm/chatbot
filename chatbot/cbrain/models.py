@@ -29,10 +29,3 @@ class ChatHistory(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     is_bot = models.BooleanField(default=False)
 
-
-class Chatbot(models.Model):
-    name = models.CharField(max_length=100, default='Chatbot')
-    # questions = models.ManyToManyField('Question')
-
-    def respond(self, message):
-        return 'I am a chatbot, and I do not respond to messages yet.'

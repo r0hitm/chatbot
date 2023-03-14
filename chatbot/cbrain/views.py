@@ -5,7 +5,7 @@ from django.db import transaction
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
-from .models import Chat, ChatHistory, Chatbot
+from .models import Chat, ChatHistory
 from .forms import UserCreationForm
 from .cbrain import get_response
 
