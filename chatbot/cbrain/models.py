@@ -16,10 +16,11 @@ the text of the message, timestamp, and isBot flag.
 
 class Chat(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    session_id = models.CharField(max_length=100, unique=True)
+    chat_id = models.CharField(max_length=100)
 
     def get_history(self):
         return ChatHistory.objects.filter(chat_session=self).order_by('timestamp')
+
 
 
 class ChatHistory(models.Model):
