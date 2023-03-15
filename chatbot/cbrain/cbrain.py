@@ -119,9 +119,13 @@ def play_madlibs(user_input=None):
     if user_input is None:
         return ask_for_playing_madlibs()
 
+    if user_input == 'stop playing' and playing:
+        playing = False
+        return 'Okay, goodbye! You don\'t have to play if you don\'t want to.'
+
     if user_input == 'play' and not playing:
         playing = True
-        return 'Let\'s play madlibs!\n\n' + ask_madlibs_question()
+        return 'Let\'s play madlibs (Type "stop playing" to abort)!\n\n' + ask_madlibs_question()
 
     if len(user_input.split()) != 1:
         return 'Please enter only one word as I\'m asking for'
