@@ -5,9 +5,6 @@
 {% endblock %}
 
 {% block content %}
-<h1>Chatbot</h1>
-
-
 <div id="chat-container">
     {% for message in chat_history %}
     <div class="{% if message.is_bot %}chatbot-message{% else %}user-message{% endif %}">
@@ -18,9 +15,9 @@
     {% endfor %}
 </div>
 
-<form method="post" action="{% url 'chat' %}" id="chat-form">
+<form method="post" action="{% url 'chat' %}" id="chat-form" autocomplete="off">
     {% csrf_token %}
-    <input type="text" name="user_message" autofocus>
+    <input type="text" name="user_message" autofocus placeholder="Type your message here">
     <button type="submit">
         <svg xmlns="http://www.w3.org/2000/svg" class="send-svg" viewBox="0 0 24 24">
             <path
@@ -34,5 +31,6 @@
 <script>
     const chatContainer = document.querySelector("#chat-container");
     chatContainer.scrollTop = chatContainer.scrollHeight;
+
 </script>
 {% endblock %}

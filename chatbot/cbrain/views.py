@@ -7,7 +7,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from .models import Chat, ChatHistory
 from .forms import UserCreationForm
-from .cbrain import get_response
+from .cbrain import get_response, init, greet
+
 
 
 def index(request):
@@ -41,8 +42,7 @@ class chat_view(LoginRequiredMixin, View):
         # with transaction.atomic():
         ChatHistory.objects.create(
             chat_session=chat, message=user_message, is_bot=False)
-        # chatbot = Chatbot()
-        # chatbot_response = chatbot.respond(user_message)
+
         chatbot_response = get_response(user_message)
         ChatHistory.objects.create(
             chat_session=chat, message=chatbot_response, is_bot=True)
