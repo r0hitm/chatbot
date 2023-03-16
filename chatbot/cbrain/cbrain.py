@@ -36,6 +36,14 @@ class Chatbot:
         self.__asked_question_i = 0
         self.__madlib_qi = 0  # madlibs question index
 
+    def __reset_madlibs(self):
+        '''Resets the madlibs game'''
+        self.__madlibs_responses = []
+        self.__playing = False
+        self.__asked_question = False
+        self.__asked_question_i = 0
+        self.__madlib_qi = 0
+
     def __greet(self):
         '''Greets the user'''
         return r.choice(q.greetings)
@@ -115,7 +123,7 @@ class Chatbot:
         self.__madlibs_responses.append(user_input)
 
         if self.__madlib_qi == len(q.madlibs_questions):
-            self.__playing = False
+            self.__reset_madlibs()
             res = 'Here\'s your madlibs story:    ' + \
                 q.generate_madlibs(self.__madlibs_responses)
             return res
