@@ -27,22 +27,11 @@ DEFULT_RESPONSES = [
 ]
 
 # Game variables
-INIT = False    # Flag to check if bot has been initialized
-
-
-def init():
-    '''Initializes the global variables'''
-    global madlibs_responses
-    global playing
-    global asked_question
-    global asked_question_i
-    global madlib_qi
-
-    madlibs_responses = []  # stores the user's responses to the madlibs questions
-    playing = False
-    asked_question = False
-    asked_question_i = 0
-    madlib_qi = 0  # madlibs question index
+madlibs_responses = []  # stores the user's responses to the madlibs questions
+playing = False
+asked_question = False
+asked_question_i = 0
+madlib_qi = 0  # madlibs question index
 
 
 def greet():
@@ -52,8 +41,9 @@ def greet():
 
 def ask_for_playing_madlibs():
     '''Asks the user if they want to play madlibs'''
-    return r.choice(q.ask_for_playing_madlibs)
-
+    invite = r.choice(q.ask_for_playing_madlibs)
+    invite += ' ' + '(Type "yes", "yeah", or "play" to begin)'
+    return invite
 
 def ask_madlibs_question():
     '''Returns a list of madlibs questions'''
@@ -81,11 +71,6 @@ def ask_question():
 def get_response(user_input):
     '''Returns a response to the user's input'''
     global asked_question
-    global INIT
-
-    if not INIT:
-        init()
-        INIT = True
 
     user_input = user_input.lower()
 
@@ -99,7 +84,7 @@ def get_response(user_input):
     if user_input in GREETING_TOKENS:
         return greet()
 
-    elif 'play' in user_input or 'game' in user_input or 'madlibs' in user_input or 'yes' in user_input:
+    elif 'play' in user_input or 'yeah' in user_input or 'yes' in user_input:
         return play_madlibs('play')
 
     elif 'goodbye' in user_input or 'bye' in user_input or 'see you later' in user_input:

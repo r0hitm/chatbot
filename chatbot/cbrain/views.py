@@ -7,7 +7,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from .models import Chat, ChatHistory
 from .forms import UserCreationForm
-from .cbrain import get_response, init, greet
+from .cbrain import get_response, greet
 
 
 
