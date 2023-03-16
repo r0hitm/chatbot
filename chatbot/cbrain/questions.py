@@ -1,5 +1,7 @@
-import re
-# Let's play madlibs!
+'''
+This file contains all the questions and responses that the chatbot will use.
+As well as the madlibs game questions and answers.
+'''
 
 greetings = [
     'Hello there! How are you today?',

@@ -1,10 +1,12 @@
 {% extends 'index.html' %}
+<!-- Chat page -->
 
 {% block head %}
 {{ block.super }}
 {% endblock %}
 
 {% block content %}
+<!-- Chat history -->
 <div id="chat-container">
     {% for message in chat_history %}
     <div class="{% if message.is_bot %}chatbot-message{% else %}user-message{% endif %}">
@@ -15,6 +17,7 @@
     {% endfor %}
 </div>
 
+<!-- Send message to the chatbot form -->
 <form method="post" action="{% url 'chat' %}" id="chat-form" autocomplete="off">
     {% csrf_token %}
     <input type="text" name="user_message" autofocus placeholder="Type your message here">
@@ -25,12 +28,12 @@
         </svg>
     </button>
 </form>
+
 <p>Logged in as {{ user }}</p>
 <p><a href="{% url 'logout' %}">Log out</a></p>
 
 <script>
     const chatContainer = document.querySelector("#chat-container");
     chatContainer.scrollTop = chatContainer.scrollHeight;
-
 </script>
 {% endblock %}

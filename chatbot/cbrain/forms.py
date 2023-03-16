@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 
 class CustomUserCreationForm(UserCreationForm):
+    '''Custom user creation form that only asks for username and password for signup.'''
     class Meta:
         model = User
         fields = ['username', 'password1', 'password2']
