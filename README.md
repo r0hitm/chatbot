@@ -5,3 +5,7 @@ The chatbot is designed to interact with users, do authenticaion and save chat h
 for each user. It is currently being used as part of a screening task for an internship opportunity.
 
 👉 [Live Demo](https://mankind.pythonanywhere.com)
+
+### Screenshots
+
+![Screenshot](screenshot.png)
