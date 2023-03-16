@@ -7,9 +7,10 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from .models import Chat, ChatHistory
 from .forms import UserCreationForm
-# from .cbrain import Chatbot
+from .cbrain import Chatbot
 
-
+# global chatbot instance
+chatbot = Chatbot()
 
 def index(request):
     # if user is logged in, redirect to chat page
@@ -37,15 +38,18 @@ class chat_view(LoginRequiredMixin, View):
         try:
             chat = Chat.objects.get(user=request.user)
         except Chat.DoesNotExist:
-            chatbot = Chatbot.objects.create()
-            chat = Chat.objects.create(user=request.user, chatbot=chatbot)
-            # chat = Chat.objects.create(user=request.user)
+            chat = Chat.objects.create(user=request.user)
 
         # with transaction.atomic():
         ChatHistory.objects.create(
             chat_session=chat, message=user_message, is_bot=False)
 
-        chatbot_response = chat.chatbot.get_response(user_message)
+        if request.session.get('chatbot_active', False):
+            global chatbot
+            chatbot = Chatbot()
+            request.session['chatbot_active'] = True
+
+        chatbot_response = chatbot.get_response(user_message)
         ChatHistory.objects.create(
             chat_session=chat, message=chatbot_response, is_bot=True)
 
@@ -78,6 +82,8 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
+    global chatbot
+    chatbot = Chatbot() # reset chatbot
     return redirect('login')
 
 

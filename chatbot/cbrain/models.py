@@ -1,6 +1,5 @@
 from django.contrib.auth.models import User
 from django.db import models
-from .cbrain import Chatbot
 
 """
 Models for the chatbot app (chatbot/cbrain/models.py)
@@ -18,7 +17,6 @@ the text of the message, timestamp, and isBot flag.
 class Chat(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     chat_id = models.CharField(max_length=100)
-    user_chatbot = models.OneToOneField(Chatbot, on_delete=models.CASCADE)
 
     def get_history(self):
         return ChatHistory.objects.filter(chat_session=self).order_by('timestamp')
